@@ -9,6 +9,16 @@ app = Flask(__name__)
 @app.route('/', methods=['POST', 'GET'])
 def index():
   return render_template('/index.html')
+ 
+@app.route('/add.html', methods=['POST', 'GET'])
+def add():
+	if request.method=='POST':
+		email = request.form['email']
+		name = request.form['name']
+		dbHandler.insertContact(email,name)
+		return render_template('/add.html', message="Thank you for signing up")
+	else:
+		return render_template('/add.html')
 
 if __name__ == '__main__':
   app.run(debug=True, host='0.0.0.0', port=5000)
